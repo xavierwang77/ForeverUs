@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from 'react';
 
 type Particle = {
@@ -12,6 +14,7 @@ type Particle = {
 
 const Fireworks = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null); // 引用父容器
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -20,8 +23,10 @@ const Fireworks = () => {
         if (!ctx) return;
 
         const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            if (containerRef.current) {
+                canvas.width = containerRef.current.clientWidth; // 设置为父容器宽度
+                canvas.height = containerRef.current.clientHeight; // 设置为父容器高度
+            }
         };
 
         // 初始设置 canvas 尺寸
@@ -73,22 +78,40 @@ const Fireworks = () => {
         };
 
         const handleClick = (e: MouseEvent) => {
-            createParticles(e.clientX, e.clientY);
+            if (!canvasRef.current) return;
+
+            // 获取 canvas 的边界矩形
+            const rect = canvasRef.current.getBoundingClientRect();
+
+            // 计算鼠标相对于 canvas 的位置
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            createParticles(x, y);
         };
 
         // 添加事件监听器
         canvas.addEventListener('click', handleClick);
-        window.addEventListener('resize', resizeCanvas); // 监听窗口大小变化
+
+        // 使用 ResizeObserver 来监听父容器的大小变化
+        const resizeObserver = new ResizeObserver(resizeCanvas);
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
 
         animate();
 
         return () => {
             canvas.removeEventListener('click', handleClick);
-            window.removeEventListener('resize', resizeCanvas); // 移除事件监听器
+            resizeObserver.disconnect(); // 移除观察者
         };
     }, []);
 
-    return <canvas ref={canvasRef} style={{ display: 'block', position: 'absolute', top: 0, left: 0 }} />;
+    return (
+        <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <canvas ref={canvasRef} style={{ display: 'block', position: 'absolute', top: 0, left: 0 }} />
+        </div>
+    );
 };
 
 export default Fireworks;
