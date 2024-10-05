@@ -5,6 +5,7 @@ import PageTransition from "@/components/PageTransition";
 import './globals.css'
 import React from "react";
 import Link from 'next/link';
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,17 +21,7 @@ export default function RootLayout({ children }: {
         <html lang="zh">
         <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
-            <header className="bg-primary text-primary-foreground py-2">
-                <div className="container mx-auto px-auto">
-                    <div className="flex items-center justify-center">
-                        <Link href="/" passHref>
-                            <h1 className="text-2xl font-bold">Forever Us</h1>
-                        </Link>
-                        <Img src="/header-icon.svg" alt="Header Icon" width={24} height={24}
-                             className="ml-2 w-6 h-6"/>
-                    </div>
-                </div>
-            </header>
+            <Header />
             <main
                 className="flex-grow flex flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-purple-200 p-4 text-center relative">
                 <PageTransition>

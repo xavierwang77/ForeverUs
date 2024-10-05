@@ -39,5 +39,8 @@ next-env.d.ts
 .vscode
 
 *.mp4
+*.mp3
 *.jpg
+key.json
 timeline.json
+cities.json

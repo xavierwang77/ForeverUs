@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import ConfettiComponent from "@/components/Confetti"
 import Link from 'next/link';
-import Fireworks from "@/components/Fireworks";
+import ClickFireworks from "@/components/ClickFireworks";
 
 export default function Home() {
     const [timeElapsed, setTimeElapsed] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
@@ -36,7 +36,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center">
             <ConfettiComponent/>
             <div className="absolute inset-0">
-                <Fireworks/>
+                <ClickFireworks/>
             </div>
             <h2 className="text-4xl font-bold text-purple-800 mb-8">M&X已经在一起</h2>
             <div className="bg-white rounded-3xl shadow-2xl p-8 mb-8 bg-opacity-20">

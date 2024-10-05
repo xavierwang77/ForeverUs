@@ -12,7 +12,7 @@ type Particle = {
     life: number;
 };
 
-const Fireworks = () => {
+const ClickFireworks = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null); // 引用父容器
 
@@ -114,4 +114,4 @@ const Fireworks = () => {
     );
 };
 
-export default Fireworks;
+export default ClickFireworks;

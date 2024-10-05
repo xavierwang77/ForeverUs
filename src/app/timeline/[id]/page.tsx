@@ -3,6 +3,7 @@
 import React from 'react';
 import TimelinePage from '@/components/TimelinePage';
 import memoriesData from '@/data/timeline.json';
+import AutoFireworks from "@/components/AutoFireworks";
 
 interface Params {
     id: string;
@@ -22,9 +23,11 @@ export default function Page({ params }: { params: Params }) {
         return <div>Memory not found</div>;
     }
 
+    const autoFireworks = memory.autoFireworks;
 
     return (
         <div className="container mx-auto px-4 py-8">
+            {autoFireworks && <AutoFireworks />}
             <TimelinePage
                 title={memory.title}
                 date={memory.date}
