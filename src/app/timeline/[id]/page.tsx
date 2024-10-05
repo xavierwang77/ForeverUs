@@ -22,6 +22,7 @@ export default function Page({ params }: { params: Params }) {
         return <div>Memory not found</div>;
     }
 
+
     return (
         <div className="container mx-auto px-4 py-8">
             <TimelinePage
