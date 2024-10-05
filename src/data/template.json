@@ -1,0 +1,13 @@
+[
+  {
+    "id": "0",
+    "title": "Our First Trip",
+    "date": "July 2019",
+    "description": "We had a wonderful time together, enjoying the sun and the sea.",
+    "imageSrc": "/timeline/0.jpg",
+    "imageAlt": "First Trip",
+    "imageOnLeft": false,
+    "buttonUrl": "/timeline/1",
+    "buttonText": "continue"
+  }
+]
