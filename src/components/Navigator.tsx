@@ -37,8 +37,8 @@ ListItem.displayName = "ListItem"
 
 const components: { title: string; href: string; description: string }[] = [
     {
-        title: "爱情信物",
-        href: "/",
+        title: "爱情图鉴",
+        href: "/loveKeepsake",
         description:
             "收集所有我们赠予对方的物品。",
     },
@@ -47,6 +47,12 @@ const components: { title: string; href: string; description: string }[] = [
         href: "/footprint",
         description:
             "记录我们一起去过的地方。",
+    },
+    {
+        title: "经期跟踪",
+        href: "/menstrual",
+        description:
+            "记录和分析月经周期。",
     }
 ]
 

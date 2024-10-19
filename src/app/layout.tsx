@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Img from 'next/image'
 import PageTransition from "@/components/PageTransition";
 import './globals.css'
 import React from "react";
-import Link from 'next/link';
 import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ['latin'] })
