@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react";
-import AMapLoader from "@amap/amap-jsapi-loader";
 import keyConfig from "@/data/key.json";
 import citiesData from "@/data/cities.json"
 
@@ -41,59 +40,64 @@ export default function Page() {
         };
 
         if (typeof window !== 'undefined') {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            window._AMapSecurityConfig = {
-                securityJsCode: keyConfig.AMap.secret,
-            };
+            // 动态导入 AMapLoader
+            import('@amap/amap-jsapi-loader').then(({ default: AMapLoader }) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                window._AMapSecurityConfig = {
+                    securityJsCode: keyConfig.AMap.secret,
+                };
 
-            AMapLoader.load({
-                key: keyConfig.AMap.key, // 申请好的Web端开发者Key
-                version: "2.0",
-                plugins: ["AMap.Scale", "AMap.DistrictLayer"],
-            })
-                .then((AMap) => {
-                    // 初始化地图
-                    if(!mapRef.current) {
-                        mapRef.current = new AMap.Map("footprint_map_container", {
-                            viewMode: "2D",
-                            zoom: 8.8,
-                            center: [113.817117, 22.952641], // 初始地图中心点
-                        });
-                    }
-
-                    // 初始化图层
-                    if (!districtLayerRef.current) {
-                        districtLayerRef.current = new AMap.DistrictLayer.Province({
-                            zIndex: 12,
-                            zooms: [2, 15],
-                            adcode: ['440000', '820000'], // 行政区划代码：广东省、澳门
-                            depth: 1, // 显示到市级
-                        });
-                    }
-
-                    console.log(cityAdcodes)
-
-                    // 设置图层样式
-                    districtLayerRef.current.setStyles({
-                        fill: function (props: any) {
-                            const adcode = props.adcode.toString()
-                            console.log(adcode)
-                            if (cityAdcodes.includes(adcode)) {
-                                return getColorByAdcode(adcode);
-                            }
-                        },
-                        'province-stroke': 'rgb(137,255,202)',
-                        'city-stroke': 'rgb(135,75,151)', // 市边界样式
-                        'county-stroke': 'rgb(113,89,204)' // 区边界样式
-                    })
-
-                    // 将图层添加到地图
-                    mapRef.current.add(districtLayerRef.current);
+                AMapLoader.load({
+                    key: keyConfig.AMap.key, // 申请好的Web端开发者Key
+                    version: "2.0",
+                    plugins: ["AMap.Scale", "AMap.DistrictLayer"],
                 })
-                .catch((e) => {
-                    console.log(e);
-                });
+                    .then((AMap) => {
+                        // 初始化地图
+                        if(!mapRef.current) {
+                            mapRef.current = new AMap.Map("footprint_map_container", {
+                                viewMode: "2D",
+                                zoom: 8.8,
+                                center: [113.817117, 22.952641], // 初始地图中心点
+                            });
+                        }
+
+                        // 初始化图层
+                        if (!districtLayerRef.current) {
+                            districtLayerRef.current = new AMap.DistrictLayer.Province({
+                                zIndex: 12,
+                                zooms: [2, 15],
+                                adcode: ['440000', '820000'], // 行政区划代码：广东省、澳门
+                                depth: 1, // 显示到市级
+                            });
+                        }
+
+                        console.log(cityAdcodes)
+
+                        // 设置图层样式
+                        districtLayerRef.current.setStyles({
+                            fill: function (props: any) {
+                                const adcode = props.adcode.toString()
+                                console.log(adcode)
+                                if (cityAdcodes.includes(adcode)) {
+                                    return getColorByAdcode(adcode);
+                                }
+                            },
+                            'province-stroke': 'rgb(137,255,202)',
+                            'city-stroke': 'rgb(135,75,151)', // 市边界样式
+                            'county-stroke': 'rgb(113,89,204)' // 区边界样式
+                        })
+
+                        // 将图层添加到地图
+                        mapRef.current.add(districtLayerRef.current);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            }).catch((e) => {
+                console.error(e);
+            });
         }
     }, [cityAdcodes, colors]); // 仅在 `colors` 变化时更新图层，不重新创建地图
 

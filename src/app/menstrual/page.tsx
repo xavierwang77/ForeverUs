@@ -180,7 +180,7 @@ export default function PeriodTracker() {
         {start: new Date(2024, 5, 13), end: new Date(2024, 5, 21)},
         {start: new Date(2024, 7, 4), end: new Date(2024, 7, 18)},
         {start: new Date(2024, 7, 28), end: new Date(2024, 8, 7)},
-        {start: new Date(2024, 9, 3), end: new Date(2024, 9, 13)},
+        {start: new Date(2024, 9, 3), end: new Date(2024, 9, 15)},
     ])
 
     const addPeriod = (newPeriod) => {
